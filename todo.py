@@ -41,8 +41,8 @@ PRIORITY_ICON = {True: '!', False: '★'}
 
 class Task:
 
-	mutators = ['priority', 'deadline', 'start', 'context', 'visibility']
-	fast_serial = ['id_', 'content', 'done', 'priority', 'context',
+	mutators = ['priority', 'deadline', 'start', 'context', 'visibility', 'update']
+	fast_serial = ['id_', 'content', 'update', 'done', 'priority', 'context',
 		'visibility']
 	date_serial = ['created', 'deadline', 'start']
 	defaults = {
@@ -52,7 +52,8 @@ class Task:
 		'start': NOW,
 		'context': '',
 		'done': False,
-		'visibility': 'discreet'
+		'visibility': 'discreet',
+		'update': ''
 	}
 
 	def __init__(self, id_, content, **kwargs):
@@ -84,6 +85,8 @@ class Task:
 			self.context = value
 		elif mutator == 'visibility':
 			self.visibility = value
+		elif mutator == 'update':
+			self.update = ' '.join(value)
 
 	def set_done(self):
 		self.done = True
@@ -129,8 +132,13 @@ class Task:
 			return descendant or context == ''
 
 	def get_string(self, id_width, ascii_=False):
-		string = '{id_:>{width}} | {content}'.format(id_=hex(self.id_)[2:],
-			width=id_width, content=self.content)
+		name_width=50
+		string = '{id_:>{width}} | {content} | {update}'.format(id_=hex(self.id_)[2:],
+			width=id_width,
+                        # this truncates the task name if it is too long or it pads it to 
+                        # name_width to keep a constant column width
+                        content=self.content[0:name_width-3]+'...' if len(self.content)>name_width else self.content+(' '*(name_width-len(self.content))),
+			update=self.update)
 		if self.context != '':
 			string += ' {}{}'.format(CONTEXT_ICON[ascii_], self.context)
 		if self.deadline != INF:
@@ -344,6 +352,8 @@ def parse_args(argv):
 	parser.add_argument('-v', '--visibility', choices=['hidden', 'discreet',
 		'wide'],
 		help="Set the visibility of a task: 'hidden', 'discreet' or 'wide'.")
+	parser.add_argument('-u', '--update', nargs='*',
+		help="Update a task with a comment")
 	args = parser.parse_args(argv)
 	return args
 
