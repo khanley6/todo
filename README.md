@@ -1,6 +1,8 @@
 todo
 ====
 
+Original project by foobuzz
+
 A simple command line todo list manager which can be as powerful as you want it do be.
 
 	$ todo -a "Fix the stuff"
