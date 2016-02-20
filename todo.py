@@ -86,7 +86,7 @@ class Task:
 		elif mutator == 'visibility':
 			self.visibility = value
 		elif mutator == 'update':
-			self.update = ' '.join(value)
+			self.update = value
 
 	def set_done(self):
 		self.done = True
