@@ -352,7 +352,7 @@ def parse_args(argv):
 	parser.add_argument('-v', '--visibility', choices=['hidden', 'discreet',
 		'wide'],
 		help="Set the visibility of a task: 'hidden', 'discreet' or 'wide'.")
-	parser.add_argument('-u', '--update', nargs='*',
+	parser.add_argument('-u', '--update', nargs='?', const=' ',
 		help="Update a task with a comment")
 	args = parser.parse_args(argv)
 	return args

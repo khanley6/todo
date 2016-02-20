@@ -199,6 +199,13 @@ You can specify a priority to a whole context:
 
 Tasks with this context will always show up before tasks with a lower context priority.
 
+## Comments/Updates
+
+Each task can be assigned a single comment as an indication of progress:
+
+	$ todo -t 1 -u "I have done ____ in order to complete the task"
+
+A blank argument to the -u switch will remove the comment. Comments are overwritten each time.
 
 ## Sort summary
 
