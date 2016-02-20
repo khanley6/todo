@@ -1,3 +1,7 @@
 __pycache__/
 *.pyc
 .dev
+.tags
+build/
+dist/
+todocli.egg-info/
